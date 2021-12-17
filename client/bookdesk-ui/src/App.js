@@ -11,20 +11,10 @@ import Home from "./components/Home";
 import Profile from "./components/Profile";
 import BoardUser from "./components/BoardUser";
 import BoardAdmin from "./components/BoardAdmin";
-// import rootReducers from "./reducers/index";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 import { history } from "./helpers/history";
-
-// const AppWrapper = () => {
-//     const store = createStore(rootReducers);
-//     return (
-//       <Provider store={store}>
-//             <App />
-//       </Provider>
-//     )
-// } 
 
 const App = () => {
     const [showAdminBoard, setShowAdminBoard] = useState(false);
@@ -123,4 +113,3 @@ const App = () => {
 };
 
 export default App;
-// export default AppWrapper;
