@@ -10,23 +10,24 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DeskService from "../services/desk.service";
 
 import "../../node_modules/react-datepicker/dist/react-datepicker.css"
-import { Paper, Grid, Table, TextField, List, ListItem, ListItemText } from "@mui/material";
+import { Paper, Grid, Table, TextField, Button, List, ListItem, ListItemText } from "@mui/material";
 
 const Desk = (props) => {
     const form = useRef();
-    const checkBtn = useRef();
+    // const checkBtn = useRef();
     // console.log("In Desk");
     const [content, setContent] = useState("");
     const [loading, setLoading] = useState(false);
     const [deskList, setDeskList] = useState("");
+    const [show, setShow] = useState(false);
     
     // const dispatch = useDispatch();
     
-    const [selectDate, setSelectDate] = useState("");
-    const [selectStartTime, setSelectStartTime] = useState("");
-    const [selectFinishTime, setSelectFinishTime] = useState("");
-    const [currStartTimeStamp, setCurrStartTimeStamp] = useState("");
-    const [currFinishTimeStamp, setCurrFinishTimeStamp] = useState("");
+    const [selectDate, setSelectDate] = useState(null);
+    const [selectStartTime, setSelectStartTime] = useState(null);
+    const [selectFinishTime, setSelectFinishTime] = useState(null);
+    const [currStartTimeStamp, setCurrStartTimeStamp] = useState(null);
+    const [currFinishTimeStamp, setCurrFinishTimeStamp] = useState(null);
     
     const onChangeSelectDate = (date) => {
         setSelectDate(date);
@@ -75,9 +76,6 @@ const Desk = (props) => {
                     console.log("In desk response part", response.data);
                     setContent(response.data);
                     onChangeDeskList(response.data);
-                    setSelectDate("");
-                    setSelectStartTime("");
-                    setSelectFinishTime("");
             },
             (error) => {
                 const _content = 
@@ -89,6 +87,10 @@ const Desk = (props) => {
                 setContent(_content);
             }
         );
+
+        onChangeSelectDate(null);
+        onChangeSelectStartTime(null);
+        setSelectFinishTime(null);
     };
 
     return(
@@ -119,25 +121,29 @@ const Desk = (props) => {
                         </LocalizationProvider>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary btn-block" disabled={loading}>
+                        {/* <button className="btn btn-primary btn-block" disabled={loading}> */}
                             {/* {loading && (
                                 <span className="spinner-border spinner-border-sm"></span>
                             )} */}
-                            <span>Get Desks</span>
-                        </button>
+                        <Button variant="contained" color="info" onClick={handleDateTimeSubmit}>Get Desks</Button>
+                        {/* </button> */}
                     </div>
-                    <CheckButton style={{ display: "none" }} ref={checkBtn} />
                 </Form>
             </div>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                    <Paper style={{maxHeight: 200, overflow: 'auto'}}>
-                        {deskList && deskList.map((desk) => 
-                            <ListItem key={desk.id} componentsProps={desk}>{desk.deskNumber}</ListItem>)}
-                            <Table />
-                    </Paper>
-                </Grid>
-            </Grid>
+            {loading && (<div className="col-md-12">
+                <div className="card card-container">
+                    <Grid container spacing={2}>
+                        <Grid item xs="auto" md="auto">
+                            <Paper style={{maxHeight: 200, overflow: 'auto'}}>
+                                {deskList && deskList.map((desk) => 
+                                    <ListItem key={desk.id} componentsProps={desk}>{desk.deskNumber}</ListItem>)}
+                                    {/* <T  able /> */}
+                            </Paper>
+                        </Grid>
+                    </Grid>
+                </div>
+            </div>)}
+            
         </div>
     );
 };
