@@ -3,9 +3,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
 
-import { DatePicker, TimePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { DatePicker, TimePicker, LocalizationProvider, AdapterDateFns } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+// import LocalizationProvider from '@mui/x-date-pickers/LocalizationProvider';
 
 import DeskService from "../services/desk.service";
 
@@ -48,14 +48,15 @@ const Desk = (props) => {
     const handleDateTimeSubmit = (e) => {  
         e.preventDefault();
         setLoading(true);
-        // console.log(selectDate.getDate());
+        console.log('Select Date: ', selectDate);
+        console.log(selectDate.$y);
         // console.log(selectStartTime.getHours());
         // console.log(selectStartTime.getMinutes());
         // console.log(selectFinishTime.getHours());
         // console.log(selectFinishTime.getMinutes());
 
-        var csts = selectDate.getFullYear() + "-" + selectDate.getMonth() + "-" + selectDate.getDate() + "T" + ("0" + selectStartTime.getHours()).slice(-2) + ":" + ("0" +selectStartTime.getMinutes()).slice(-2);
-        var cfts = selectDate.getFullYear() + "-" + selectDate.getMonth() + "-" + selectDate.getDate() + "T" + ("0" + selectFinishTime.getHours()).slice(-2) + ":" + ("0" +selectFinishTime.getMinutes()).slice(-2);
+        var csts = selectDate.$y + "-" + selectDate.$m + "-" + selectDate.$d + "T" + ("0" + selectStartTime.$h).slice(-2) + ":" + ("0" +selectStartTime.$m).slice(-2);
+        var cfts = selectDate.$y + "-" + selectDate.$m + "-" + selectDate.$d + "T" + ("0" + selectFinishTime.$h).slice(-2) + ":" + ("0" +selectFinishTime.$m).slice(-2);
 
         // console.log("curr time stamp is: ", currStartTimeStamp);
         // console.log("curr time stamp is: ", currFinishTimeStamp);
@@ -98,7 +99,7 @@ const Desk = (props) => {
             <div className="card card-container">
                 <Form onSubmit={handleDateTimeSubmit} ref={form}>
                     <div>
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                                 label="Select Date"
                                 value={selectDate}
@@ -120,7 +121,7 @@ const Desk = (props) => {
                             />
                         </LocalizationProvider>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-4">
                         {/* <button className="btn btn-primary btn-block" disabled={loading}> */}
                             {/* {loading && (
                                 <span className="spinner-border spinner-border-sm"></span>
@@ -136,8 +137,9 @@ const Desk = (props) => {
                         <Grid item xs="auto" md="auto">
                             <Paper style={{maxHeight: 200, overflow: 'auto'}}>
                                 {deskList && deskList.map((desk) => 
-                                    <ListItem key={desk.id} componentsProps={desk}>{desk.deskNumber}</ListItem>)}
-                                    {/* <T  able /> */}
+                                    <ListItem key={desk.id} componentsProps={desk}>{desk.deskNumber}</ListItem>
+                                )}
+                                {/* <Table /> */}
                             </Paper>
                         </Grid>
                     </Grid>

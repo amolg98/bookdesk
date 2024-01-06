@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
@@ -29,14 +29,14 @@ public class Role {
     /**
      * @return the id
      */
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

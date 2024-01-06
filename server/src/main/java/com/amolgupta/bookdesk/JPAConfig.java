@@ -45,7 +45,7 @@ public class JPAConfig {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName("org.sqlite.JDBC");
         // ds.setUrl("jdbc:sqlite:memory:myDb?cache=shared"); // only for in-memory database
-        ds.setUrl("jdbc:sqlite:/home/agupta/BookDesk.db");
+        ds.setUrl("jdbc:sqlite:/home/amolg98/Desktop/projects/bookdesk/BookDesk.db");
         // Seems like being lightweight sqlite3 doesn't support authentication out of box, well we don't need it as well as we are going to use bamboohr/google authentication for making any such requests
         ds.setUsername("sa");
         ds.setPassword("sa");
